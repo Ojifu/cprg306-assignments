@@ -1,0 +1,12 @@
+export default function Item ({ name, quantity, category, onSelect }){
+    return(
+        <div 
+            className="text-4x1 border border-sky-500 bg-sky-800 w-full max-w-xs m-4 p-2"
+            onClick={() => onSelect(name)}
+        >
+            <h3 className="text-xl font-bold">{name}</h3>
+            <p>Quantity: {quantity}</p>
+            <p>Category: {category}</p>
+        </div>
+    )
+}

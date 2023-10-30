@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Item from "./item.js";
 import Link from 'next/link';
 
-const ItemList = ({ items }) => {  // Receive the items prop
+const ItemList = ({ items, onItemSelect }) => {  // Receive the items and onItemSelect props
   const [sortBy, setSortBy] = useState("name");
 
   const buttonStyle = {
@@ -16,6 +16,14 @@ const ItemList = ({ items }) => {  // Receive the items prop
     sortedItems.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sortBy === "category") {
     sortedItems.sort((a, b) => a.category.localeCompare(b.category));
+  }
+
+  const handleItemSelect = (itemName) => {
+    // Trigger the onItemSelect function with the respective item as an argument
+    const selectedItem = items.find(item => item.name === itemName);
+    if (selectedItem) {
+      onItemSelect(selectedItem);
+    }
   }
 
   return (
@@ -36,7 +44,7 @@ const ItemList = ({ items }) => {  // Receive the items prop
         Sort by Category
       </button>
       {sortedItems.map(item => (
-        <Item key={item.id} {...item} />
+        <Item key={item.id} {...item} onSelect={handleItemSelect} />
       ))}
     </div>
   );
