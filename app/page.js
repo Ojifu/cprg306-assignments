@@ -1,66 +1,61 @@
-import Image from 'next/image';
+"use client";
+import React from 'react';
+import { useUserAuth } from "./_utils/auth-context"; // Ensure this path is correct.
 import Link from 'next/link';
-import StudentInfo from './StudentInfo';
 
-export default function Home() {
-  return (
-    <main style={styles.container}>
-      <h1 style={styles.header}>CPRG 306: Web Development 2 - Assignments</h1>
-      <StudentInfo />
-      <div style={styles.linkContainer}>
-        <Link href="/week2" style={styles.link}>
-          Week 2
-        </Link>
-      </div>
-      <div style={styles.linkContainer}>
-        <Link href="/week3" style={styles.link}>
-          Week 3
-        </Link>
-      </div>
-      <div style={styles.linkContainer}>
-        <Link href="/week4" style={styles.link}>
-          Week 4
-        </Link>
-      </div>
-      <div style={styles.linkContainer}>
-        <Link href="/week5" style={styles.link}>
-          Week 5
-        </Link>
-      </div>
-      <div style={styles.linkContainer}>
-        <Link href="/week6" style={styles.link}>
-          Week 6
-        </Link>
-      </div>
+const LandingPage = () => {
+    const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
+
+    return (
+        <main>
+        <div 
+            style={{ 
+                backgroundImage: "url('https://wallpapercave.com/wp/wp2757868.gif')", 
+                backgroundRepeat: 'no-repeat', 
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+            }} 
+            className="absolute inset-0 flex justify-center items-center"
+        >
+            <div className="relative w-full overflow-hidden rounded-2xl max-w-lg bg-gray-200 shadow-inner p-8 mx-auto text-center shadow-xl">
+                {!user ? (
+                    <>
+                        <h1 className="text-6xl text-orange-600 mb-4">Week 8: Firebase Auth </h1>
+                        <div className="flex flex-col items-center space-y-4 bg-white p-4 rounded-2xl shadow-inner shadow-xl border border-orange-600">
+                            <p className="text-xl text-black">Please log in to access your shopping list.</p>
+                            <button 
+                                onClick={gitHubSignIn} 
+                                className="flex items-center bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400"
+                            >
+                                <img src="https://cdn.iconscout.com/icon/free/png-256/github-156-675764.png" alt="GitHub Logo" className="w-6 h-6 mr-2" />
+                                Login with GitHub
+                            </button>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className="flex flex-col items-center space-y-4 bg-white p-4 rounded-2xl shadow-inner">
+                            <p className="text-xl text-black">Welcome, {user.displayName} ({user.email})</p>
+                            <button 
+                                onClick={firebaseSignOut} 
+                                className="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400"
+                            >
+                                Log Out
+                            </button>
+                        </div>
+                        <div className="mt-4">
+                            <Link href="/week8/shopping-list">
+                                  <div className="inline-block bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-400">
+                                    Shopping List
+                                    </div>
+                            </Link>
+                        </div>
+                    </>
+                )}
+            </div>
+        </div>
     </main>
-  );
+    );
 }
 
-const styles = {
-  container: {
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#f9f9f9',
-    padding: '40px',
-    borderRadius: '5px',
-    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-    maxWidth: '600px',
-    margin: '40px auto',
-    textAlign: 'center'
-  },
-  header: {
-    color: '#2c3e50',
-    marginBottom: '30px'
-  },
-  linkContainer: {
-    margin: '10px 0'
-  },
-  link: {
-    display: 'inline-block',
-    backgroundColor: '#3498db',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    textDecoration: 'none',
-    transition: 'background-color 0.3s'
-  }
-};
+export default LandingPage;
