@@ -23,20 +23,27 @@ const Page = () => {
     };
 
     return (
-        <main className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h3 className="mb-8 text-center font-bold">Shopping List</h3>
+        <main className="flex flex-col items-center justify-center min-h-screen py-2 px-16">
+            <h1 className="text-3xl font-bold mb-8">Shopping List</h1>
 
-            <div className="flex w-full justify-between px-16"> {/* Main content area */}
+            <div className="flex w-full space-x-8"> {/* Main content area */}
                 <div className="flex flex-col w-1/2 space-y-4"> {/* Left section */}
                     <NewItem onAddItem={handleAddItem} />
-                    <ItemList items={items} onItemSelect={handleItemSelect} />
+                    <div className="flex flex-col space-y-2">
+                        <div className="flex space-x-4">
+                            <button className="bg-orange-500 px-4 py-2 text-white rounded">Name</button>
+                            <button className="bg-gray-300 px-4 py-2 text-black rounded">Category</button>
+                        </div>
+                        <ItemList items={items} onItemSelect={handleItemSelect} />
+                    </div>
                 </div>
 
-                <div className="w-1/2"> {/* Right section */}
+                <div className="flex flex-col w-1/2 space-y-4 border-l pl-8"> {/* Right section */}
+                    <h2 className="text-2xl font-bold">Meal Ideas</h2>
                     <MealIdeas ingredient={selectedItemName} />
                 </div>
             </div>
-            
+
             <Link href="/" className="mt-8">Home</Link>
         </main>
     );

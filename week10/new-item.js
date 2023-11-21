@@ -1,0 +1,69 @@
+"use client";
+import { useState } from "react";
+import Link from 'next/link';
+
+const NewItem = ({ onAddItem }) => {  // Introduced the onAddItem prop
+    const [name, setName] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [category, setCategory] = useState("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const item = { name, quantity, category };
+        
+        if (onAddItem) { // If onAddItem prop exists, invoke it with the item object
+            onAddItem(item);
+        }
+
+        // Clear form fields after submission
+        setName("");
+        setQuantity(1);
+        setCategory("produce");
+    };
+
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="name">Name:</label>
+                    <input id="name" type="text" value={name} onChange={(event) => setName(event.target.value)} />
+                </div>
+                <div>
+                    <label htmlFor="quantity">Quantity:</label>
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        max="99"
+                        value={quantity}
+                        onChange={(event) => setQuantity(event.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="category">Category:</label>
+                    <select id="category" value={category} onChange={(event) => setCategory(event.target.value)}>
+                        <option value="produce">Produce</option>
+                        <option value="dairy">Dairy</option>
+                        <option value="meat">Meat</option>
+                        <option value="frozen">Frozen</option>
+                        <option value="canned">Canned</option>
+                        <option value="dry">Dry</option>
+                        <option value="beverages">Beverages</option>
+                        <option value="snacks">Snacks</option>
+                        <option value="household">Household</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <button type="submit">Add Item</button>
+            </form>
+            
+            {/* Home button */}
+            <div style={{ marginTop: '20px' }}>
+                <Link href="/">Home</Link>
+            </div>
+        </div>
+    );      
+};
+
+export default NewItem;
